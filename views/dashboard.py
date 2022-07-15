@@ -356,7 +356,6 @@ def add_text(left_btn, right_btn, reset_btn, download_csv, date_range, selected_
         or ('add-right-btn.n_clicks' in [p['prop_id'] for p in callback_context.triggered]):
         if len(selected_row_ids) != 0:
             temp = measure_df.loc[selected_row_ids, ['Title', 'Geo', 'Label1', 'Label2', 'Label3']].copy()
-            print(temp['Title'].unique())
             if 'add-left-btn.n_clicks' in [p['prop_id'] for p in callback_context.triggered]:
                 temp['secondary_y'] = False
             elif 'add-right-btn.n_clicks' in [p['prop_id'] for p in callback_context.triggered]:

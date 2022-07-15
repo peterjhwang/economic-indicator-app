@@ -1,7 +1,9 @@
 from dash import Dash, dcc, html, Input, Output
 from dash_app import app
 from views import about, dashboard
+import logging
 
+logging.basicConfig(level=logging.INFO)
 application = app.server
 
 app.layout = html.Div([
