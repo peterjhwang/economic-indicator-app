@@ -12,7 +12,7 @@ def load_banner():
                             dbc.Row(
                                 [
                                     dbc.Col(html.Img(src='/assets/logo.png', height="30px")),
-                                    dbc.Col(dbc.NavbarBrand("NZ Economic Data", className="ms-2", style={'fontWeight': 'bold'})),
+                                    dbc.Col(dbc.NavbarBrand("NZ Economic Indicator Prediction", className="ms-2", style={'fontWeight': 'bold'})),
                                 ],
                                 align="center",
                                 className="g-0",
@@ -22,7 +22,8 @@ def load_banner():
                         ),
                         dbc.Row(
                             [
-                                dbc.Col(dbc.NavItem(dbc.NavLink("Dashboard", href="/", style={'padding': '8px'})), style={'padding': '5px'}),
+                                dbc.Col(dbc.NavItem(dbc.NavLink("Playground", href="/", style={'padding': '8px'})), style={'padding': '5px'}),
+                                dbc.Col(dbc.NavItem(dbc.NavLink("Prediction", href="/", style={'padding': '8px'})), style={'padding': '5px'}),
                                 dbc.Col(dbc.NavItem(dbc.NavLink("About Me", href="/about", style={'padding': '8px'})),  style={'padding': '5px'})
                             ]
                         )
