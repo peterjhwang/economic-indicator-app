@@ -214,40 +214,48 @@ layout = dbc.Container([
             dbc.Col(
                 html.Div(className='dashboard-graphbox',
                     children=[generate_control_card()],
-                ), md=6, lg=5, xl=4
+                ), md=6, lg=5, xl=4,
             ),
             # Right column
-            dbc.Col([html.Div(className='dashboard-graphbox',
-                    children=[
-                        # Patient Volume Heatmap
-                        html.Div(
-                            id="chart-area1",
-                            children=[
-                                dbc.Row([
-                                    dbc.Col([html.B("NZ Data Trend "),
-                                        html.Small(id='agg-level', children='', style={'font-size': '9px'})
-                                        ]),
-                                    dbc.Col(dbc.Button(id='download-csv', children="Download CSV", className="btn btn-primary btn-sm"), style = {'text-align':'end'})
-                                ], justify="between",),
-                                dcc.Graph(id="chart1", style={'height': '450px'}),
-                                dcc.Download(id="download-text")
-                            ],
-                        ),
-                    ],
-                ),
-                html.Div(className='dashboard-graphbox',
-                    children=[
-                        html.B('Correlation Heatmap'),
-                        dcc.Graph(id="chart2", style={'height': '350px'}, figure={}),
-                    ]
+            dbc.Col([html.Div(
+                        className='dashboard-graphbox',
+                        children=[
+                            # Patient Volume Heatmap
+                            html.Div(
+                                id="chart-area1",
+                                children=[
+                                    dbc.Row([
+                                        dbc.Col([html.B("NZ Data Trend "),
+                                            html.Small(id='agg-level', children='', style={'font-size': '9px'})
+                                            ]),
+                                        dbc.Col(dbc.Button(id='download-csv', children="Download CSV", className="btn btn-primary btn-sm"), style = {'text-align':'end'})
+                                    ], justify="between",),
+                                    dcc.Graph(id="chart1", style={'height': '100%'}),
+                                    dcc.Download(id="download-text")
+                                ],
+                                style={'height': '90%'}
+                            ),
+                        ],
+                        style={'height': '60%'}
+                    ),
+                    html.Div(className='dashboard-graphbox',
+                        children=[
+                            html.B('Correlation Heatmap'),
+                            dcc.Graph(id="chart2", style={'height': '90%'}, figure={}),
+                        ],
+                        style={'height': '39%'}
+                    )
+                    ], md=6, lg=7, xl=8,
+                    style={'height': '90vh'}
                 )
-                ], md=6, lg=7, xl=8
-            )], 
+            ], 
         ), 
-    html.Br(),
-    footer.generate_footer('Data Source: Stats NZ'),
-    ], style={'background-color': '#EDEDED'},
-    fluid=True)
+        html.Br(),
+        footer.generate_footer('Data Source: Stats NZ'),
+    ], 
+    style={'background-color': '#EDEDED', 'height': '100vh'},
+    fluid=True
+    )
 
 @app.callback(
     [Output('title-dropdown', 'options'),
@@ -371,6 +379,8 @@ def add_text(left_btn, right_btn, reset_btn, download_csv, date_range, selected_
         url = f'{BACKEND_URL}/get_csv'
         app.logger.info(url)
         r = requests.post(url, json = json_data, headers= headers)
+        if r.json()['data'] == 'no data':
+            return [from_date, to_date, dash.no_update, dash.no_update, dash.no_update, dash.no_update, []]
         return [from_date, to_date, dash.no_update, dash.no_update, dash.no_update, dict(content=r.json()['data'], filename=r.json()['filename']), []]
     else:
         url = f'{BACKEND_URL}/get_graphs'
