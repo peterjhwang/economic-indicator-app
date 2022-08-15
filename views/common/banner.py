@@ -1,5 +1,6 @@
-from dash import Input, Output, dcc, html
+from dash import Input, Output, dcc, html, State
 import dash_bootstrap_components as dbc
+from dash_app import app
 
 PLOTLY_LOGO = "https://images.plot.ly/logo/new-branding/plotly-logomark.png"
 
@@ -46,3 +47,13 @@ def load_banner():
                 color="primary",
                 dark=True,
             )
+
+@app.callback(
+    Output("navbar-collapse", "is_open"),
+    [Input("navbar-toggler", "n_clicks")],
+    [State("navbar-collapse", "is_open")],
+)
+def toggle_navbar_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open
